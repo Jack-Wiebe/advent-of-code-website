@@ -33,7 +33,7 @@ advent-of-code-web/
 │   │       ├── part1.go      # Part 1 solution
 │   │       └── part2.go      # Part 2 solution
 │   └── utils
-│       └── utils.go            # Shared utility functions
+│       └── utils.go          # Shared utility functions
 └── static/
     ├── index.html            # Main frontend
     ├── styles.css            # Styling
@@ -45,7 +45,7 @@ Quick Start
 Clone the repository:
 
 ```
-git clone <repository-url>
+git clone https://github.com/Jack-Wiebe/advent-of-code-website
 cd advent-of-code-web
 ```
 
