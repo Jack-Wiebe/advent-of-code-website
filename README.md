@@ -20,24 +20,20 @@ Project Structure
 
 ```
 advent-of-code-web/
-│
 ├── go.mod
-│
 ├── main.go
-│
-├──types/
-│   └── types.go             #  Shared type definitions
-│
-├──handlers/
+├── types/
+│   └── types.go              #  Shared type definitions
+├── handlers/
 │   └── handlers.go           # HTTP request handlers
-│
 ├── solutions/
-│   └── year/
-│       └── day
-│           ├── main.go       # Problem entrypoint
-│           ├── part1.go      # Part 1 solution
-│           └── part2.go      # Part 2 solution
-│
+│   ├── year/
+│   │   └── day
+│   │       ├── main.go       # Problem entrypoint
+│   │       ├── part1.go      # Part 1 solution
+│   │       └── part2.go      # Part 2 solution
+│   └── utils
+│       └── utils.go            # Shared utility functions
 └── static/
     ├── index.html            # Main frontend
     ├── styles.css            # Styling
