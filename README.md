@@ -1,5 +1,4 @@
 Advent of Code Solutions Web Interface
-Written in Golang and Javascript
 
 A web-based interface for running and displaying Advent of Code solutions written in Go. This project provides a clean web UI to execute your AOC solutions and view the results in real-time.
 
@@ -21,27 +20,29 @@ Project Structure
 
 ```
 advent-of-code-web/
+│
 ├── go.mod
+│
 ├── main.go
-├── internal/
-│   ├── types/
-│   │   └── types.go          # Shared type definitions
-│   └── handlers/
-│       └── handlers.go       # HTTP request handlers
+│
+├──types/
+│   └── types.go             #  Shared type definitions
+│
+├──handlers/
+│   └── handlers.go           # HTTP request handlers
+│
 ├── solutions/
-│   ├── day1/
-│   │   └── solution.go       # Day 1 solution
-│   ├── day2/
-│   │   └── solution.go       # Day 2 solution
-│   └── solver.go             # Solution registry and interface
-├── web/
-│   └── static/
-│       ├── index.html        # Main frontend
-│       ├── styles.css        # Styling
-│       └── app.js           # Frontend JavaScript
-└── inputs/
-    ├── day1.txt             # Day 1 input file
-    └── day2.txt             # Day 2 input file
+│   └── year/
+│       └── day
+│           ├── main.go       # Problem entrypoint
+│           ├── part1.go      # Part 1 solution
+│           └── part2.go      # Part 2 solution
+│
+└── static/
+    ├── index.html            # Main frontend
+    ├── styles.css            # Styling
+    └── app.js                # Frontend JavaScript
+
 ```
 
 Quick Start
@@ -68,7 +69,4 @@ License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Acknowledgments
-Advent of Code by Eric Wastl
-([`Advent of Code`](https://https://adventofcode.com/))
-
-Go standard library and community packages
+[`Advent of Code`](https://https://adventofcode.com/) by Eric Wastl
