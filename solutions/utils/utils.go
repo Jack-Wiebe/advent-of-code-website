@@ -17,6 +17,14 @@ func AbsInt(x int) int {
 	return x
 }
 
+func Mod(x int, m int) int {
+    result := x % m
+    if result < 0 {
+        result += m
+    }
+    return result
+}
+
 func Contains[T comparable](input []T, value T) bool {
 	for _, v := range input {
 		if v == value {
@@ -43,8 +51,14 @@ func Splice[T any](slice []T, index int) []T {
 	return test
 }
 
-func ReadFile() (*bufio.Scanner, error) {
-    file, err := os.Open("input")
+func ReadFile(fileName ...string) (*bufio.Scanner, error) {
+
+	fn := "input"
+
+	if len(fileName) > 0 && fileName[0] != "" {
+        fn = fileName[0]
+    }
+    file, err := os.Open(fn)
     if err != nil {
         return nil, err
     }
