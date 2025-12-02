@@ -65,4 +65,4 @@ License
 This project is licensed under the MIT License - see the LICENSE file for details.
 
 Acknowledgments
-[`Advent of Code`](https://https://adventofcode.com/) by Eric Wastl
+[`Advent of Code`](https://adventofcode.com/) by Eric Wastl
