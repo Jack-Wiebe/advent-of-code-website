@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"encoding/json"
+	"errors"
 	"fmt"
 	"net/http"
 	"os"
@@ -102,9 +103,12 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    cmd := exec.Command("go", "run", ".")
-    output, err := cmd.CombinedOutput()
-    outputStr := string(output)
+    // cmd := exec.Command("go", "run", ".")
+    // output, err := cmd.CombinedOutput()
+    // outputStr := string(output)
+    //outputStr,err := ExecGoSolution(w, result)
+    //outputStr,err := ExecJavascriptSolution(w, result)
+    outputStr,err := ExecSolution(solutionPath, w, result)
 
     if err != nil {
         result.Error = fmt.Sprintf("Execution error: %v", err)
@@ -115,8 +119,8 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
     jsonStr, consoleStr := extractJSONFromOutput(outputStr)
     if jsonStr == "" {
         result.Error = "No JSON found in output"
-        sendJSONResponse(w, result)
-        return
+        //sendJSONResponse(w, result)
+        //return
     }
     result.Output = consoleStr
 
@@ -132,6 +136,54 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
     }
 
     sendJSONResponse(w, result)
+}
+
+func ExecSolution(solutionPath string, w http.ResponseWriter, result types.SolutionOutput)(string, error){
+    mainGoPath :=  "main.go"
+    if _, err := os.Stat(mainGoPath); err == nil {
+        fmt.Println("✓ main.go exists, executing go run...")
+        return ExecGoSolution(w, result)
+    }
+
+    indexJsPath := "index.js"
+    if _, err := os.Stat(indexJsPath); err == nil {
+        fmt.Println("✓ index.js exists, executing node...")
+        return ExecJavascriptSolution(w, result)
+    }
+
+    return "No solution found", errors.New("no solution found")
+}
+
+func ExecGoSolution(w http.ResponseWriter, result types.SolutionOutput) (string, error){
+
+    cmd := exec.Command("go", "run", ".")
+    output, err := cmd.CombinedOutput()
+    outputStr := string(output)
+
+    if err != nil {
+        result.Error = fmt.Sprintf("Execution error: %v", err)
+        sendJSONResponse(w, result)
+        return "", err
+    }
+
+    return outputStr, nil
+
+}
+
+func ExecJavascriptSolution(w http.ResponseWriter, result types.SolutionOutput) (string, error){
+
+    cmd := exec.Command("node", ".")
+    output, err := cmd.CombinedOutput()
+    outputStr := string(output)
+
+    if err != nil {
+        result.Error = fmt.Sprintf("Execution error: %v", err)
+        sendJSONResponse(w, result)
+        return "", err
+    }
+
+    return outputStr, nil
+
 }
 
 func extractJSONFromOutput(output string) (jsonStr string, cleanOutput string) {

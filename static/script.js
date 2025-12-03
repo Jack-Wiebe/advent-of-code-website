@@ -92,11 +92,15 @@ class AdventOfCodeUI {
 
       if (result.error) {
         this.outputElement.textContent = `Error: ${result.error}\n\nOutput:\n${result.output}`;
+        this.solutionPart1Element.textContent = "";
+        this.solutionPart2Element.textContent = "";
       } else {
-        this.outputElement.textContent =
-          result.output || "No output (check if solution prints results)";
         this.solutionPart1Element.textContent = result.part1;
         this.solutionPart2Element.textContent = result.part2;
+      }
+      if (result.output) {
+        this.outputElement.textContent =
+          result.output || "No output (check if solution prints results)";
       }
     } catch (error) {
       this.outputElement.textContent = `Network error: ${error.message}`;
