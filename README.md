@@ -46,7 +46,7 @@ Clone the repository:
 
 ```
 git clone https://github.com/Jack-Wiebe/advent-of-code-website
-cd advent-of-code-web
+cd advent-of-code-website
 ```
 
 Run the application:

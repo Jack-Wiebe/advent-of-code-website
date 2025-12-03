@@ -120,7 +120,7 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
     }
     result.Output = consoleStr
 
-    var solutionOutput SolutionOutput
+    var solutionOutput types.SolutionOutput
     if err := json.Unmarshal([]byte(jsonStr), &solutionOutput); err != nil {
         result.Error = "Failed to parse JSON: " + err.Error()
     } else {
@@ -155,13 +155,6 @@ func extractJSONFromOutput(output string) (jsonStr string, cleanOutput string) {
     }
 
     return foundJSON, strings.Join(outputLines, "\n")
-}
-
-type SolutionOutput struct {
-    Part1 int    `json:"part1"`
-    Part2 int    `json:"part2"`
-    Error string `json:"error,omitempty"`
-    Output  string `json:"output,omitempty"`
 }
 
 func sendJSONResponse(w http.ResponseWriter, data interface{}) {
