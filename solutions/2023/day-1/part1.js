@@ -1,8 +1,10 @@
 const fs = require("fs");
+const path = require("path");
 
 module.exports = {
   run: function () {
-    const input = fs.readFileSync("input", "utf-8").split("\r\n");
+    const filePath = path.join(__dirname, "input");
+    const input = fs.readFileSync(filePath, "utf-8").split("\n");
 
     console.log(input);
 
