@@ -56,6 +56,10 @@ func sumInvalidRanges2(start int, end int) int {
 
 }
 
+// only using this after spending 20 minutes on a RegEx
+// before learning that Go does not support backrefernces
+// `^(\d+)\1+$`
+
 func checkRepeating(str string) bool {
 
 	for i := 1; i <= len(str)/2; i++ {
@@ -63,7 +67,7 @@ func checkRepeating(str string) bool {
 			pattern := str[:i]
 			valid := true
 
-			for j := i; j < len(str); j += i {
+			for j := i; j < len(str); j += i { //increment by the size of the substring we are checking
 				if str[j:j+i] != pattern {
 					valid = false
 					break
