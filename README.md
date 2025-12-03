@@ -6,7 +6,7 @@ Features
 
 - Web interface for Advent of Code solutions
 
-- Real-time solution execution
+- Real-time execution for both Node.js and Golang solutions
 
 - Clean separation of solution values and console output
 
@@ -27,11 +27,17 @@ advent-of-code-web/
 ├── handlers/
 │   └── handlers.go           # HTTP request handlers
 ├── solutions/
-│   ├── year/
+│   ├── year-go/
 │   │   └── day
 │   │       ├── main.go       # Problem entrypoint
 │   │       ├── part1.go      # Part 1 solution
 │   │       └── part2.go      # Part 2 solution
+│   ├── year-js/
+│   │   └── day
+│   │       ├── index.js      # Problem entrypoint
+│   │       ├── package.json  # solution package
+│   │       ├── part1.js      # Part 1 solution
+│   │       └── part2.js      # Part 2 solution
 │   └── utils
 │       └── utils.go          # Shared utility functions
 └── static/

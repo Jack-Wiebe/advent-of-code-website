@@ -103,11 +103,6 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
-    // cmd := exec.Command("go", "run", ".")
-    // output, err := cmd.CombinedOutput()
-    // outputStr := string(output)
-    //outputStr,err := ExecGoSolution(w, result)
-    //outputStr,err := ExecJavascriptSolution(w, result)
     outputStr,err := ExecSolution(solutionPath, w, result)
 
     if err != nil {
@@ -119,8 +114,6 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
     jsonStr, consoleStr := extractJSONFromOutput(outputStr)
     if jsonStr == "" {
         result.Error = "No JSON found in output"
-        //sendJSONResponse(w, result)
-        //return
     }
     result.Output = consoleStr
 
