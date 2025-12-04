@@ -1,42 +1,14 @@
-const fs = require("fs");
+const part1 = require("./part1.js");
+const part2 = require("./part2.js");
 
-//12 red cubes, 13 green cubes, and 14 blue
-const MAX = {
-  red: 12,
-  green: 13,
-  blue: 14,
+const result1 = part1.run();
+console.log("Result:", result1);
+
+const result2 = part2.run();
+console.log("Result:", result2);
+
+let result = {
+  Part1: result1,
+  Part2: result2,
 };
-
-const input = fs
-  .readFileSync("input", "utf-8")
-  .split("\r\n")
-  .reduce((acc, e) => {
-    acc.push(e.replace("Game ", "").replace(":", ";").split(";"));
-    return acc;
-  }, []);
-
-let check = true;
-let count = 0;
-for (let i = 0; i < input.length; i++) {
-  check = true;
-  let val = input[i][0];
-  //game
-  for (let j = 1; j < input[i].length; j++) {
-    let rounds = input[i][j].split(",");
-    console.log(rounds);
-    //round
-    for (let k = 0; k < rounds.length; k++) {
-      let hand = rounds[k].split(" ");
-      let num = hand[1];
-      let color = hand[2];
-      if (MAX[color] < num) {
-        check = false;
-      }
-    }
-  }
-  if (check) {
-    count += parseInt(val);
-  }
-}
-
-console.log(count);
+console.log(JSON.stringify(result));
