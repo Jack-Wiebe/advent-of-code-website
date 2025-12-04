@@ -51,6 +51,30 @@ func Splice[T any](slice []T, index int) []T {
 	return test
 }
 
+func GridToString(grid [][]rune) string {
+    if grid == nil {
+        return "nil"
+    }
+    if len(grid) == 0 {
+        return "[]"
+    }
+
+    var sb strings.Builder
+    for i, row := range grid {
+        if i > 0 {
+            sb.WriteString("\n")
+        }
+        for _, ch := range row {
+            if ch == 0 {
+                sb.WriteString("·") // Show zeros as dots
+            } else {
+                sb.WriteRune(ch)
+            }
+        }
+    }
+    return sb.String()
+}
+
 func ReadFile(fileName ...string) (*bufio.Scanner, error) {
 
 	fn := "input"
