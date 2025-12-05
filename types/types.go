@@ -14,5 +14,6 @@ type SolutionOutput struct {
 	Output string `json:"output"`
 	Part1  int    `json:"part1,omitempty"`
 	Part2  int    `json:"part2,omitempty"`
+	Delta  int64  `json:"delta,omitempty"`
 	Error  string `json:"error,omitempty"`
 }

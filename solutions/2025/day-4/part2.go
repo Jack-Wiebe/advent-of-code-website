@@ -2,6 +2,7 @@ package main
 
 import (
 	"advent-of-code-website/solutions/utils"
+	"fmt"
 )
 
 func Part2() (int,error) {
@@ -29,6 +30,8 @@ func Part2() (int,error) {
 	}
 
 	for {
+		fmt.Println(utils.GridToString(grid))
+		fmt.Println()
 		value := removePaperRoll(&grid, &output)
 		if value == 0 {
 				break
@@ -39,6 +42,7 @@ func Part2() (int,error) {
 			grid[i] = make([]rune, len(row))
 			copy(grid[i], row)
 		}
+
 	}
 
 	return count, nil

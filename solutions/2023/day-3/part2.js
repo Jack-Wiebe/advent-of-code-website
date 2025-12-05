@@ -154,60 +154,73 @@ input = `
 // `.split(/\r\n|\r|\n/);
 
 const fs = require("fs");
+const path = require("path");
 
-const test = fs.readFileSync("d3", "utf-8");
-input = test.split("\r\n");
-console.log(input);
-console.log(test);
+module.exports = {
+  run: function () {
+    const filePath = path.join(__dirname, "d3");
 
-let numbers = [];
+    const test = fs.readFileSync(filePath, "utf-8");
+    input = test.split("\r\n");
+    console.log(input);
+    console.log(test);
 
-let directions = [
-  [-1, -1],
-  [-1, 0],
-  [-1, 1],
-  [0, -1],
-  [0, 1],
-  [1, -1],
-  [1, 0],
-  [1, 1],
-];
+    let numbers = [];
 
-function isNumber(char) {
-  return char >= "0" && char <= "9";
-}
+    let directions = [
+      [-1, -1],
+      [-1, 0],
+      [-1, 1],
+      [0, -1],
+      [0, 1],
+      [1, -1],
+      [1, 0],
+      [1, 1],
+    ];
 
-let check = 0;
+    function isNumber(char) {
+      return char >= "0" && char <= "9";
+    }
 
-function findGear() {
-  for (let row = 1; row < input.length; row++) {
-    for (let col = 0; col < input[row].length; col++) {
-      if (input[row][col] == "*") {
-        console.log("STAR");
-        for (let k = 0; k < directions.length; k++) {
-          //console.log(row + directions[k][0], col + directions[k][1]);
-          if (
-            row + directions[k][0] <= input.length &&
-            row + directions[k][0] >= 0 &&
-            col + directions[k][1] <= input[row].length &&
-            col + directions[k][1] >= 0
-          ) {
-            let char = input[row + directions[k][0]][col + directions[k][1]];
-            //console.log(char);
-            if (isNumber(char)) {
-              console.log("found Number", char);
-              check++;
+    let check = 0;
+
+    function findGear() {
+      for (let row = 1; row < input.length; row++) {
+        for (let col = 0; col < input[row].length; col++) {
+          if (input[row][col] == "*") {
+            console.log("STAR");
+            for (let k = 0; k < directions.length; k++) {
+              //console.log(row + directions[k][0], col + directions[k][1]);
+              if (
+                row + directions[k][0] <= input.length &&
+                row + directions[k][0] >= 0 &&
+                col + directions[k][1] <= input[row].length &&
+                col + directions[k][1] >= 0
+              ) {
+                let char =
+                  input[row + directions[k][0]][col + directions[k][1]];
+                //console.log(char);
+                if (isNumber(char)) {
+                  console.log("found Number", char);
+                  check++;
+                }
+              } else {
+                //console.log("hit a wall");
+              }
             }
-          } else {
-            //console.log("hit a wall");
+            if (check > 1) {
+            }
+            check = 0;
           }
         }
-        if (check > 1) {
-        }
-        check = 0;
       }
     }
-  }
-}
 
-gears = findGear();
+    gears = findGear();
+    if (gears == undefined) {
+      gears = -1;
+    }
+
+    return gears;
+  },
+};

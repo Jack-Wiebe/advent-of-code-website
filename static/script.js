@@ -9,6 +9,7 @@ class AdventOfCodeUI {
     this.solutionPart2Element = document.getElementById(
       "part2-solution-output"
     );
+    this.soltionDelta = document.getElementById("solution-delta");
     this.currentYear = "";
     this.loadYears();
   }
@@ -94,9 +95,11 @@ class AdventOfCodeUI {
         this.outputElement.textContent = `Error: ${result.error}\n\nOutput:\n${result.output}`;
         this.solutionPart1Element.textContent = "";
         this.solutionPart2Element.textContent = "";
+        this.soltionDelta.textContent = "";
       } else {
         this.solutionPart1Element.textContent = result.part1;
         this.solutionPart2Element.textContent = result.part2;
+        this.soltionDelta.textContent = result.delta + "ms";
       }
       if (result.output) {
         this.outputElement.textContent =

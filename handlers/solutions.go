@@ -10,6 +10,7 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+	"time"
 
 	"advent-of-code-website/types"
 
@@ -103,7 +104,9 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
         return
     }
 
+    start := time.Now()
     outputStr,err := ExecSolution(solutionPath, w, result)
+    delta := time.Since(start)
 
     if err != nil {
         result.Error = fmt.Sprintf("Execution error: %v", err)
@@ -123,6 +126,7 @@ func RunSolutionHandler(w http.ResponseWriter, r *http.Request) {
     } else {
         result.Part1 = solutionOutput.Part1
         result.Part2 = solutionOutput.Part2
+        result.Delta = delta.Milliseconds()
         if solutionOutput.Error != "" {
             result.Error = solutionOutput.Error
         }
