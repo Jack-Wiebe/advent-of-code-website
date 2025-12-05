@@ -114,9 +114,55 @@ class AdventOfCodeUI {
       });
     }
   }
+
+  enterFullscreen() {
+    if (this.outputElement.requestFullscreen) {
+      this.outputElement.requestFullscreen();
+    } else if (this.outputElement.webkitRequestFullscreen) {
+      this.outputElement.webkitRequestFullscreen();
+    } else if (this.outputElement.msRequestFullscreen) {
+      this.outputElement.msRequestFullscreen();
+    }
+
+    this.outputElement.classList.add("fullscreen-active");
+  }
+
+  exitFullscreen() {
+    if (document.exitFullscreen) {
+      document.exitFullscreen();
+    } else if (document.webkitExitFullscreen) {
+      document.webkitExitFullscreen();
+    } else if (document.msExitFullscreen) {
+      document.msExitFullscreen();
+    }
+
+    this.outputElementclassList.remove("fullscreen-active");
+  }
+
+  isFullscreen() {
+    return (
+      document.fullscreenElement ||
+      document.webkitFullscreenElement ||
+      document.msFullscreenElement
+    );
+  }
 }
 
-// Initialize the UI when page loads
+let uiInstance = null;
 document.addEventListener("DOMContentLoaded", () => {
-  new AdventOfCodeUI();
+  uiInstance = new AdventOfCodeUI();
+});
+
+document.addEventListener("keydown", (e) => {
+  if (e.key === "f" || e.key === "F") {
+    if (uiInstance.isFullscreen()) {
+      uiInstance.exitFullscreen();
+    } else {
+      uiInstance.enterFullscreen();
+    }
+  }
+
+  if (e.key === "Escape" && uiInstance.isFullscreen()) {
+    uiInstance.exitFullscreen();
+  }
 });
