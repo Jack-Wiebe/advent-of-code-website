@@ -91,7 +91,7 @@ func (uf *UnionFind) Find(p Position) Position {
 
 }
 
-func (uf *UnionFind) Union(a Position, b Position) {
+func (uf *UnionFind) Union(a Position, b Position) bool {
 	rootA := uf.Find(a)
 	rootB := uf.Find(b)
 
@@ -99,6 +99,9 @@ func (uf *UnionFind) Union(a Position, b Position) {
 
 	if rootA != rootB {
 		uf.parent[rootB] = rootA
+		return true
+	}else{
+		return false
 	}
 }
 
