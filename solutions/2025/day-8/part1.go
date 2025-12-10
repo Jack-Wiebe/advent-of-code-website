@@ -10,54 +10,35 @@ import (
 
 func Part1() (int,error) {
 
-	scanner, err := utils.ReadFile("test")
+	scanner, err := utils.ReadFile("")
 	if err != nil {
 			return -1 , err
 	}
 
 	var positions []Position
-	var pairs []Pair
-	minDistance:=math.MaxFloat64
-	lastMinDistance:=0.0
-	numberOfConnections := 10
+	var allConnections []Pair
+	numberOfConnections := 1000
 
 	for scanner.Scan(){
-
 		line := scanner.Text()
-		//fmt.Println(line)
 		strArray := strings.Split(line, ",")
 		x,_:=strconv.Atoi(strArray[0])
 		y,_:=strconv.Atoi(strArray[1])
 		z,_:=strconv.Atoi(strArray[2])
     positions = append(positions, Position{x:x, y:y, z:z})
-
 	}
 
-	//fmt.Println(positions)
-
-	var nodeA Position
-	var nodeB Position
-	for range(numberOfConnections){
-		for i,p := range(positions){
-			for _,np := range(positions[i+1:]){
-				distance := calculateDistance(p, np)
-				if distance < minDistance && distance > lastMinDistance{
-					//fmt.Println(p, np)
-					minDistance = distance
-					nodeA = p
-					nodeB = np
-				}
-			}
+	for i,p := range(positions){
+		for _,np := range(positions[i+1:]){
+			distance := calculateDistance(p, np)
+			allConnections = append(allConnections, Pair{A: p, B: np, distance: distance})
 		}
-		pairs = append(pairs, Pair{A:nodeA, B:nodeB})
-		lastMinDistance = minDistance
-		minDistance = math.MaxFloat64
 	}
 
-	output := ProcessPairs(pairs)
-
-	//fmt.Println(output)
-
+	sort.Slice(allConnections, func(i, j int) bool {
+			return allConnections[i].distance < allConnections[j].distance
+	})
+	output := ProcessPairs(allConnections[:numberOfConnections])
 
 	return output, nil
 }
@@ -82,6 +63,7 @@ type Position struct {
 
 type Pair struct {
 	A, B Position
+	distance float64
 }
 
 type UnionFind struct {
