@@ -35,7 +35,6 @@ func Part1() (int,error) {
 	for i:=0; i < len(operations); i++{
 		total,_:=strconv.Atoi(operations[i][0])
 		operation := operations[i][len(operations[i])-1]
-		println(operation)
 		for j:=1; j < len(operations[i]) - 1; j++{
 			val,_:=strconv.Atoi(operations[i][j])
 			switch operation {

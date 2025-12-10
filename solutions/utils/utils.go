@@ -34,6 +34,17 @@ func Contains[T comparable](input []T, value T) bool {
 	return false
 }
 
+func RemoveElement[T comparable](slice []T, index int) []T {
+    return append(slice[:index], slice[index+1:]...)
+}
+
+func ReplaceElement[T comparable](slice []T, index int, newElement T) []T {
+    if index >= 0 && index < len(slice) {
+        slice[index] = newElement
+    }
+    return slice
+}
+
 func MoveElement[T any](input []T, fromIndex int, toIndex int) []T {
 
 	element := input[fromIndex]
@@ -41,6 +52,15 @@ func MoveElement[T any](input []T, fromIndex int, toIndex int) []T {
 	input = append(input[:toIndex], append([]T{element}, input[toIndex:]...)...)
 
 	return input
+}
+
+func IndexOf[T comparable](slice []T, element T) int {
+    for i, v := range slice {
+        if v == element {
+            return i
+        }
+    }
+    return -1
 }
 
 func Splice[T any](slice []T, index int) []T {
