@@ -10,7 +10,8 @@ class AdventOfCodeUI {
       "part2-solution-output"
     );
     this.soltionDelta = document.getElementById("solution-delta");
-    this.currentYear = "";
+    this.currentYearElement = "";
+    this.currentSolutionElement = "";
     this.loadYears();
   }
 
@@ -19,8 +20,7 @@ class AdventOfCodeUI {
       const response = await fetch("/api/years");
       const years = await response.json();
       this.renderYears(years);
-      this.currentYear = years[0].name;
-      this.loadSolutions(this.currentYear);
+      this.loadSolutions(years[0].name);
     } catch (error) {
       console.error("Error loading years:", error);
       this.outputElement.textContent = "Error loading years";
@@ -43,18 +43,33 @@ class AdventOfCodeUI {
 
     years.forEach((year) => {
       const card = document.createElement("div");
-      card.className = "year-card";
+
+      if (!this.currentYearElement) {
+        this.currentYearElement = card;
+        card.className = "year-card active";
+      } else {
+        card.className = "year-card";
+      }
+
       card.innerHTML = `
                 <h3>${year.name}</h3>
             `;
 
-      card.addEventListener("click", () => this.switchYear(year));
+      card.addEventListener("click", (e) =>
+        this.switchYear(year, e.currentTarget)
+      );
       this.yearSelector.appendChild(card);
     });
   }
 
   renderSolutions(year, solutions) {
     this.solutionsGrid.innerHTML = "";
+
+    solutions.sort((a, b) => {
+      let day1 = a.day.split("-")[1];
+      let day2 = b.day.split("-")[1];
+      return day1 - day2;
+    });
 
     solutions.forEach((solution) => {
       const card = document.createElement("div");
@@ -64,21 +79,33 @@ class AdventOfCodeUI {
                 <div class="status">${solution.status}</div>
             `;
 
-      card.addEventListener("click", () =>
-        this.runSolution(year, solution.day)
+      card.addEventListener("click", (e) =>
+        this.runSolution(year, solution.day, e.currentTarget)
       );
       this.solutionsGrid.appendChild(card);
     });
   }
 
-  async switchYear(year) {
+  async switchYear(year, card) {
     console.log("clicked", year.name);
-    this.currentYear = year.name;
-    this.loadSolutions(this.currentYear);
+
+    if (this.currentYearElement) {
+      this.currentYearElement.classList.remove("active");
+    }
+    this.currentYearElement = card;
+    card.classList.add("active");
+
+    this.loadSolutions(year.name);
   }
 
-  async runSolution(year, day) {
+  async runSolution(year, day, card) {
     this.outputElement.textContent = `Running ${day}...`;
+
+    if (this.currentSolutionElement) {
+      this.currentSolutionElement.classList.remove("active");
+    }
+    this.currentSolutionElement = card;
+    card.classList.add("active");
 
     // Add loading state to all cards
     document.querySelectorAll(".solution-card").forEach((card) => {

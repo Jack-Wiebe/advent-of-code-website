@@ -52,7 +52,14 @@ header p {
   border: 2px solid transparent;
 }
 
-.solution-card:hover {
+.solution-card.active {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #99ff99;
+  color: #99ff99;
+  transform: translateY(-5px);
+}
+
+.solution-card:hover:not(.active) {
   background: rgba(255, 255, 255, 0.2);
   border-color: #99ff99;
   color: #99ff99;
@@ -96,12 +103,26 @@ header p {
   min-width: 120px;
 }
 
-.year-card:hover {
+.year-card.active {
   background: rgba(255, 255, 255, 0.2);
   border-color: #99ff99;
   color: #99ff99;
   transform: translateY(-5px);
 }
+
+.year-card:hover:not(.active) {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #99ff99;
+  color: #99ff99;
+  transform: translateY(-5px);
+}
+
+/* .year-card:hover {
+  background: rgba(255, 255, 255, 0.2);
+  border-color: #99ff99;
+  color: #99ff99;
+  transform: translateY(-5px);
+} */
 
 .output-section {
   background: rgba(0, 0, 0, 0.3);
