@@ -27,8 +27,8 @@ func Part2() (int,error) {
 
 	}
 
-	rack := ServerRack{serverMap, NewCache()}
-	count := rack.recursiveCaching(Device{name:"svr", mask: 0}, "out")
+	rack := ServerRack{serverMap, map[Device]int{}}
+	count := rack.recursiveCaching(Device{name:"svr", mask: 0})
 
 	return count, nil
 }
@@ -45,22 +45,14 @@ type Device struct {
 	mask int
 }
 
-type Cache struct {
-	data map[Device]int
-}
-func NewCache() Cache {
-	return Cache{
-		data: map[Device]int{},
-	}
-}
-
 type ServerRack struct {
 	serverMap map[string][]string
-	cache   Cache
+	cache     map[Device]int
 }
-func (rack *ServerRack) recursiveCaching(current Device, end string) (int) {
 
-	if current.name == end {
+func (rack *ServerRack) recursiveCaching(current Device) (int) {
+
+	if current.name == "out" {
 		if(current.mask == BOTH){
 			return 1
 		}else{
@@ -77,10 +69,10 @@ func (rack *ServerRack) recursiveCaching(current Device, end string) (int) {
 	sum:=0
 	for _, next := range rack.serverMap[current.name] {
 		d := Device{next, current.mask}
-		count, found := rack.cache.data[d]
-		if !found {
-			count = rack.recursiveCaching(d, end)
-			rack.cache.data[d] = count
+		count, cached := rack.cache[d]
+		if !cached {
+			count = rack.recursiveCaching(d)
+			rack.cache[d] = count
 		}
 		sum += count
 	}
