@@ -55,7 +55,7 @@ func NewCache() Cache {
 }
 
 type ServerRack struct {
-	servers map[string][]string
+	serverMap map[string][]string
 	cache   Cache
 }
 func (rack *ServerRack) recursiveCaching(current Device, end string) (int) {
@@ -75,7 +75,7 @@ func (rack *ServerRack) recursiveCaching(current Device, end string) (int) {
 	}
 
 	sum:=0
-	for _, next := range rack.servers[current.name] {
+	for _, next := range rack.serverMap[current.name] {
 		d := Device{next, current.mask}
 		count, found := rack.cache.data[d]
 		if !found {
