@@ -52,17 +52,14 @@ type ServerRack struct {
 
 func (rack *ServerRack) recursiveCaching(current Device) (int) {
 
-	if current.name == "out" {
+	switch current.name{
+	case "out":
 		if(current.mask == BOTH){
 			return 1
-		}else{
-			return 0
 		}
-	}
-
-	if current.name == "fft" {
+	case "fft":
 		current.mask |= FFT
-	} else if current.name == "dac" {
+	case "dac":
 		current.mask |= DAC
 	}
 

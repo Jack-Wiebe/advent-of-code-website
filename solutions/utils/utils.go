@@ -34,6 +34,28 @@ func Contains[T comparable](input []T, value T) bool {
 	return false
 }
 
+func ExtendSliceLength[T any](slice []T, minLength int, fillValue T) []T {
+    if minLength <= len(slice) {
+        return slice
+    }
+    delta := minLength - len(slice)
+    for range(delta) {
+        slice = append(slice, fillValue)
+    }
+    return slice
+}
+
+func DynamicSet[T any](slice []T, value T, index ...int) []T {
+    idx := len(slice)
+    if len(index) > 0 {
+        idx = index[0]
+    }
+    slice = ExtendSliceLength(slice, idx+1, *new(T))
+    slice[idx] = value
+    return slice
+}
+
+
 func RemoveElement[T comparable](slice []T, index int) []T {
     return append(slice[:index], slice[index+1:]...)
 }
